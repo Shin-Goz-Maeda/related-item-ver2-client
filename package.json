@@ -7,9 +7,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tsc": "tsc",
+    "tsc-watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "dotenv-webpack": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
