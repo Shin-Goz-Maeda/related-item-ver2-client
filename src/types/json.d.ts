@@ -1,3 +1,5 @@
+// JSONの型指定をするファイル
+
 export type JSONType = {
   [key: number]: {
     brand: string;
