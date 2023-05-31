@@ -2,15 +2,17 @@
 import React, { ReactElement } from 'react';
 
 type Props = {
-  img: string;
+  itemImg: string;
 };
 
-const ItemImgContainer = ({ img }: Props): ReactElement => {
-  return (
+const ItemImgContainer = ({ itemImg }: Props): ReactElement => {
+  const contents = (
     <>
-      <img src={img} alt="itemImg" />
+      <img src={itemImg} alt="itemImg" />
     </>
   );
+
+  return contents;
 };
 
 export default ItemImgContainer;

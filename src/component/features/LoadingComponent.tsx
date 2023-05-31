@@ -2,7 +2,8 @@
 import React from 'react';
 
 const LoadingComponent = () => {
-  return <div>ロード中</div>;
+  const contents = <div>ロード中</div>;
+  return contents;
 };
 
 export default LoadingComponent;

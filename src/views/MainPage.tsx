@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import type { JSONType } from '../types/json';
 import type { ItemType } from '../types/item';
 import { getDatafromServer } from '../component/atoms/GetDataFromServer';
-import ItemComponent from '../component/features/itemInfoBox/ItemConponent';
-import LoadingComponent from '../component/features/loading/LoadingComponent';
+import ItemComponent from '../component/features/ItemsBox/ItemsConponent';
+import LoadingComponent from '../component/features/LoadingComponent';
 
 const MainPage = () => {
   const [items, setItems] = useState<JSONType>({});
