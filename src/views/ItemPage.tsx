@@ -21,7 +21,7 @@ const ItemPage = () => {
   useEffect(() => {
     // idの数値に該当するアイテムの情報を取得する
     getDataFromServer(`/itemPage/${id}`, setItem, setLoading);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     // インスタグラムの埋め込みコードを描画が終わった後に表示する
