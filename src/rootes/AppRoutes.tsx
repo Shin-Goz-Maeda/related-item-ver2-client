@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import MainPage from '../views/MainPage';
 import ItemPage from '../views/ItemPage';
+import SignUpPage from '../views/SignUpPage';
 
 const AppRoutes = () => {
   const contents = (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
         <Route path="itemPage">
           <Route path=":id" element={<ItemPage />} />
         </Route>
+        <Route path="signUpPage" element={<SignUpPage />} />
       </Routes>
     </BrowserRouter>
   );
