@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import NothingItemComponent from '../nothingItemComponent';
+import NothingItemComponent from '../NothingItemComponent';
 
 type Props = {
   instagramData: any;
