@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDatafromServer } from '../component/atoms/GetDataFromServer';
+import { getDataFromServer } from '../component/atoms/GetDataFromServer';
 import { JSONType } from '../types/json';
 import LoadingComponent from '../component/features/LoadingComponent';
 import ItemComponent from '../component/features/ItemBox/ItemComponent';
@@ -14,13 +14,13 @@ interface InstagramWindow extends Window {
 declare const window: InstagramWindow;
 
 const ItemPage = () => {
-  const [item, setItem] = useState<JSONType>({});
+  const [item, setItem] = useState<JSONType | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
 
   useEffect(() => {
-    //　idの数値に該当するアイテムの情報を取得する
-    getDatafromServer(`/itemPage/${id}`, setItem, setLoading);
+    // idの数値に該当するアイテムの情報を取得する
+    getDataFromServer(`/itemPage/${id}`, setItem, setLoading);
   }, [id]);
 
   useEffect(() => {
