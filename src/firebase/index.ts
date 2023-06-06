@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import type { FirebaseType } from '../types/firebase';
+import { initializeApp } from "firebase/app";
+import type { FirebaseType } from "../types/firebase";
+import { GoogleAuthProvider, getAuth } from "@firebase/auth";
 
 const firebaseConfig: FirebaseType = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,3 +16,5 @@ const firebaseConfig: FirebaseType = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
+export const googleProvider = new GoogleAuthProvider();
