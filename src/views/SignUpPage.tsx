@@ -51,7 +51,17 @@ const SignUpPage = () => {
     signInWithPopup(auth, googleProvider)
       // TODO: any型を修正
       .then((result: any) => {
-        console.log(result);
+        const providerId: string | null = result.providerId;
+        const email: string = result.user.email;
+        const emailVerified: boolean = result.user.emailVerified;
+        const userId: string = result.user.uid;
+        const newUserData: NewUserData = {
+          providerId,
+          email,
+          emailVerified,
+          userId,
+        };
+        postInfoToServer("/google-signUp", newUserData, setError);
       })
       // TODO: any型を修正
       .catch((error: any) => {
