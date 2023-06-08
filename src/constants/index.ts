@@ -1,4 +1,9 @@
-export const HOST_DOMAIN: string | undefined = import.meta.env.VITE_HOST_DOMAIN;
+
+export const CLIENT_DOMAIN: string | undefined = import.meta.env
+  .VITE_CLIENT_DOMAIN;
+
+export const SERVER_DOMAIN: string | undefined = import.meta.env
+  .VITE_SERVER_DOMAIN;
 
 export const CATCH_ERROR = (error: string) => {
   switch (error) {
@@ -33,6 +38,10 @@ export const CATCH_ERROR = (error: string) => {
     case "not-bothValue":
       const notBothValue = "メールアドレスかパスワードに誤りがあります。";
       return notBothValue;
+    case "not-mail-varified":
+      const notEMailVarified = "メール認証が完了していません。";
+      return notEMailVarified;
+
 
     // デフォルトエラー
     default:
