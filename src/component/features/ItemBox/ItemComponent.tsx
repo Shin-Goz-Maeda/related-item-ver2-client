@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import NothingItemComponent from '../nothingItemComponent';
+import NothingItemComponent from '../NothingItemComponent';
 import ItemImgContainer from './ItemImgContainer';
 import ItemInfoContainer from './ItemInfoContainer';
 import { JSONType } from '../../../types/json';

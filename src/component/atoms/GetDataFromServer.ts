@@ -1,9 +1,9 @@
-import { HOST_DOMAIN } from '../../constants/Constants';
+import { HOST_DOMAIN } from '../../constants/index';
 import type { JSONType } from '../../types/json';
 
-export const getDatafromServer = (
+export const getDataFromServer = (
   path: string,
-  someSetFunc: React.Dispatch<React.SetStateAction<JSONType>>,
+  someSetFunc: React.Dispatch<React.SetStateAction<JSONType | undefined>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   if (HOST_DOMAIN !== undefined) {

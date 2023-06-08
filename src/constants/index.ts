@@ -1,3 +1,4 @@
+
 export const CLIENT_DOMAIN: string | undefined = import.meta.env
   .VITE_CLIENT_DOMAIN;
 
@@ -40,6 +41,7 @@ export const CATCH_ERROR = (error: string) => {
     case "not-mail-varified":
       const notEMailVarified = "メール認証が完了していません。";
       return notEMailVarified;
+
 
     // デフォルトエラー
     default:
