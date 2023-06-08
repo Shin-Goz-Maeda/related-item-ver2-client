@@ -1,14 +1,24 @@
 import React, { useRef, useState } from "react";
-import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { CATCH_ERROR } from "../constants";
+import {
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  User,
+  UserCredential,
+  getAdditionalUserInfo,
+} from "firebase/auth";
+import { CATCH_ERROR, CLIENT_DOMAIN } from "../constants";
 import { auth, googleProvider } from "../firebase";
-import { postInfoToServer } from "../component/atoms/PostInfoToServer";
+import { postDataToServer } from "../component/atoms/PostDataToServer";
 import { NewUserData } from "../types/newUserData";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<Object>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleEmailSignUP = () => {
     event?.preventDefault();
@@ -24,24 +34,41 @@ const SignUpPage = () => {
     } else {
       if (email && password) {
         createUserWithEmailAndPassword(auth, email, password)
-          // TODO: any型を修正
-          .then((result: any) => {
-            console.log(result);
-            const providerId: string | null = result.providerId;
-            const email: string = result.user.email;
-            const emailVerified: boolean = result.user.emailVerified;
-            const userId: string = result.user.uid;
-            const newUserData: NewUserData = {
-              providerId,
-              email,
-              emailVerified,
-              userId,
-            };
-            postInfoToServer("/email-signUp", newUserData, setError);
+          .then((result: UserCredential) => {
+            const user: User = result.user;
+
+            if (user !== null) {
+              const providerId: string | null = result.providerId;
+              const email: string | null = result.user.email;
+              const emailVerified: boolean = result.user.emailVerified;
+              const userId: string = result.user.uid;
+              const newUserData: NewUserData = {
+                providerId,
+                email,
+                emailVerified,
+                userId,
+              };
+
+              postDataToServer("/email-signUp", newUserData, setError);
+
+              const actionCodeSettings = {
+                url: CLIENT_DOMAIN + "/signInPage",
+                handleCodeInApp: false,
+              };
+
+              // TODO: 認証メールを送信する処理を作成する
+              if (auth.currentUser) {
+                sendEmailVerification(auth.currentUser, actionCodeSettings);
+              }
+
+              navigate("/sendMailConfirmationPage");
+            } else {
+              setError("ユーザーが作成されませんでした。");
+            }
           })
           // TODO: any型を修正
           .catch((error: any) => {
-            console.log(error);
+            setError(CATCH_ERROR(error.code));
           });
       }
     }
@@ -49,23 +76,48 @@ const SignUpPage = () => {
 
   const handleGoogleSignUp = () => {
     signInWithPopup(auth, googleProvider)
-      // TODO: any型を修正
-      .then((result: any) => {
-        const providerId: string | null = result.providerId;
-        const email: string = result.user.email;
-        const emailVerified: boolean = result.user.emailVerified;
-        const userId: string = result.user.uid;
-        const newUserData: NewUserData = {
-          providerId,
-          email,
-          emailVerified,
-          userId,
-        };
-        postInfoToServer("/google-signUp", newUserData, setError);
+      .then((result: UserCredential) => {
+        const user: User = result.user;
+
+        if (user !== null) {
+          const userId: string = result.user.uid;
+
+          postDataToServer("/user-check", userId, setError, setSuccess);
+
+          if (success) {
+            if (Object.keys(success).length > 0) {
+              navigate("/");
+            } else {
+              const providerId: string | null = result.providerId;
+              const email: string | null = result.user.email;
+              const emailVerified: boolean = result.user.emailVerified;
+              const newUserData: NewUserData = {
+                providerId,
+                email,
+                emailVerified,
+                userId,
+              };
+
+              postDataToServer("/google-signUp", newUserData, setError);
+
+              // 初回ログインユーザーか判断
+              const isNewUser: boolean | undefined =
+                getAdditionalUserInfo(result)?.isNewUser;
+
+              if (isNewUser) {
+                navigate("/accountSetUpPage");
+              } else {
+                navigate("/");
+              }
+            }
+          }
+        } else {
+          setError("ユーザーが作成されませんでした。");
+        }
       })
       // TODO: any型を修正
       .catch((error: any) => {
-        console.log(error);
+        setError(CATCH_ERROR(error.code));
       });
   };
 
