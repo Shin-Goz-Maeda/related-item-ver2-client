@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 export const CLIENT_DOMAIN: string | undefined = import.meta.env
   .VITE_CLIENT_DOMAIN;
@@ -42,10 +43,16 @@ export const CATCH_ERROR = (error: string) => {
       const notEMailVarified = "メール認証が完了していません。";
       return notEMailVarified;
 
-
     // デフォルトエラー
     default:
       const somethingWrong = "メールアドレスかパスワードに誤りがあります。";
       return somethingWrong;
   }
 };
+
+// 今日の日付
+const date: Date = new Date(Date.now());
+const year = date.getFullYear();
+const month = ("00" + (date.getMonth() + 1)).slice(-2);
+const day = ("00" + date.getDate()).slice(-2);
+export const TODAY: string = "" + year + month + day;
