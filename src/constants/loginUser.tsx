@@ -35,7 +35,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(user);
       });
     }
-    console.log(user);
   }, []);
 
   // 共有する値

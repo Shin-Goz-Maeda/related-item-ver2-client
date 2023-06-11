@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { postAccountData } from "../types/postAccountData";
+import { PostAccountData } from "../types/postAccountData";
 import { TODAY } from "../constants";
 import { postDataToServer } from "../component/atoms/PostDataToServer";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../constants/loginUser";
 
 const AccountSetUpPage = () => {
+  const { user } = useContext(AuthContext);
   const [error, setError] = useState<string>("");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
+  console.log(user);
+
   const onSubmit = (data: any) => {
+    const userId = user?.uid;
     const birthDay = data.birthDay;
     const birthDayMonth1 = birthDay.charAt(4);
     const birthDayMonth2 = birthDay.charAt(5);
@@ -26,13 +31,18 @@ const AccountSetUpPage = () => {
       "01" <= birthDayDate &&
       "31" >= birthDayDate
     ) {
-      const accountData: postAccountData = {
+      const accountData: PostAccountData = {
         userName: data.userName,
         sex: data.sex,
         birthDay,
-        category: data.category,
+        category: JSON.stringify(data.category),
       };
-      postDataToServer("/account-info-setUp", accountData, setError);
+      const postData = {
+        userId,
+        accountData,
+      };
+
+      postDataToServer("/account-info-setUp", postData, setError);
       navigate("/");
     } else {
       setError("誕生日が正しく入力されていません。");
