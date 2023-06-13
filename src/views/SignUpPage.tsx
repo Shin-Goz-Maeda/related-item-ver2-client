@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<Object>();
+  const [success, setSuccess] = useState<Object[] | undefined>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -85,7 +85,9 @@ const SignUpPage = () => {
           postDataToServer("/user-check", userId, setError, setSuccess);
 
           if (success) {
-            if (Object.keys(success).length > 0) {
+            // TODO: アカウントが重複して登録される
+            // TODO: ”popup.ts:285 Cross-Origin-Opener-Policy policy would block the window.closed call.”が表示され、初回ログインユーザーがアカウント情報登録ページに遷移しない
+            if (Object.keys(success).length > 1) {
               navigate("/");
             } else {
               const providerId: string | null = result.providerId;

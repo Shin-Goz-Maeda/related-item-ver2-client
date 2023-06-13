@@ -1,16 +1,16 @@
 // DBに登録されている商品情報をすべて表示させるページ
-import React, { useEffect, useState } from 'react';
-import type { JSONType } from '../types/json';
-import { getDataFromServer } from '../component/atoms/GetDataFromServer';
-import ItemComponent from '../component/features/ItemsBox/ItemsConponent';
-import LoadingComponent from '../component/features/LoadingComponent';
+import React, { useEffect, useState } from "react";
+import type { JSONType } from "../types/json";
+import { getDataFromServer } from "../component/atoms/GetDataFromServer";
+import ItemComponent from "../component/features/ItemsBox/ItemsConponent";
+import LoadingComponent from "../component/features/LoadingComponent";
 
 const MainPage = () => {
   const [items, setItems] = useState<JSONType | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     // サーバーからすべての商品データを取得し、setItemImgに代入する処理
-    getDataFromServer('/getImgMainPage', setItems, setLoading);
+    getDataFromServer("/getImgMainPage", setItems, setLoading);
   }, []);
 
   const allItemsData = () => {
