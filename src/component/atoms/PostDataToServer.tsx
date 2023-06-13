@@ -1,8 +1,9 @@
 import { CATCH_ERROR, SERVER_DOMAIN } from "../../constants";
 import { NewUserData } from "../../types/newUserData";
+import { PostData } from "../../types/postAccountData";
 import { UserData } from "../../types/userData";
 
-const postData = (data: NewUserData | UserData | string) => {
+const postData = (data: NewUserData | UserData | string | PostData) => {
   // POST情報を設定
   const postParameter = {
     method: "POST",
@@ -18,9 +19,9 @@ const postData = (data: NewUserData | UserData | string) => {
 
 export const postDataToServer = (
   path: string,
-  data: NewUserData | UserData | string,
+  data: NewUserData | UserData | string | PostData,
   setErrorFunc: React.Dispatch<React.SetStateAction<string>>,
-  setSuccessFunc?: React.Dispatch<React.SetStateAction<Object | undefined>>
+  setSuccessFunc?: React.Dispatch<React.SetStateAction<Object[] | undefined>>
 ) => {
   fetch(SERVER_DOMAIN + path, postData(data)).then((res) =>
     res.json().then((data) => {
@@ -36,6 +37,7 @@ export const postDataToServer = (
 
       if (data.error) {
         setErrorFunc(data.error);
+        return;
       }
     })
   );
