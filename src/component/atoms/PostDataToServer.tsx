@@ -37,6 +37,7 @@ export const postDataToServer = (
 
       if (data.error) {
         setErrorFunc(data.error);
+        return;
       }
     })
   );
