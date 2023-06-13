@@ -15,7 +15,7 @@ import { NewUserData } from "../types/newUserData";
 
 const SignInPage = () => {
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<Object>();
+  const [success, setSuccess] = useState<Object[] | undefined>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -69,9 +69,10 @@ const SignInPage = () => {
           const userId: string = result.user.uid;
 
           postDataToServer("/user-check", userId, setError, setSuccess);
+          console.log(success);
 
           if (success) {
-            if (Object.keys(success).length > 0) {
+            if (Object.keys(success).length > 1) {
               navigate("/");
             } else {
               const providerId: string | null = result.providerId;

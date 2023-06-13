@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getDataFromServer } from '../component/atoms/GetDataFromServer';
-import { JSONType } from '../types/json';
-import LoadingComponent from '../component/features/LoadingComponent';
-import ItemComponent from '../component/features/ItemBox/ItemComponent';
-import InstagramComponent from '../component/features/ItemBox/InstagramComponent';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getDataFromServer } from "../component/atoms/GetDataFromServer";
+import { JSONType } from "../types/json";
+import LoadingComponent from "../component/features/LoadingComponent";
+import ItemComponent from "../component/features/ItemBox/ItemComponent";
+import InstagramComponent from "../component/features/ItemBox/InstagramComponent";
 
 // windowにInstgrmのプロパティがないため、持っていることを宣言しエラーを回避している
 interface InstagramWindow extends Window {
@@ -32,14 +32,14 @@ const ItemPage = () => {
         window.instgrm.Embeds.process();
       }
 
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
+      const script = document.createElement("script");
+      script.type = "text/javascript";
 
-      const attr = document.createAttribute('src');
-      attr.value = '//www.instagram.com/embed.js';
+      const attr = document.createAttribute("src");
+      attr.value = "//www.instagram.com/embed.js";
       script.setAttributeNode(attr);
 
-      const head = document.getElementsByTagName('head')[0];
+      const head = document.getElementsByTagName("head")[0];
       head.appendChild(script);
     }
   }, [loading]);
