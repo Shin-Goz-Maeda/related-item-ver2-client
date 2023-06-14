@@ -11,20 +11,9 @@ type AuthProviderProps = {
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<User | null | undefined>();
   const [signInCheck, setSignInCheck] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  // ログイン状態とログインしているユーザー情報
-  // TODO: anyを解消する。
-  const userLoggedInState = {
-    setSignInCheck: (signInState: boolean) => {
-      setSignInCheck(signInState);
-    },
-    setUser: (userState: User | null) => {
-      setUser(userState);
-    },
-  };
 
   // 現在ログインしているユーザー情報を取得
   useEffect(() => {
@@ -37,8 +26,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
+  // ログイン状態とログインしているユーザー情報
+  // TODO: anyを解消する。
+  const userLoggedInState = (
+    signInState: boolean,
+    userState: User | null
+  ): void => {
+    setSignInCheck(signInState);
+    setUser(userState);
+  };
+
   // 共有する値
-  const value = {
+  const value: AuthValue = {
     user,
     userLoggedInState,
   };

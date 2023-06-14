@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { getDataFromServer } from "../component/atoms/GetDataFromServer";
 import { JSONType } from "../types/json";
 import LoadingComponent from "../component/features/LoadingComponent";
-import ItemComponent from "../component/features/ItemBox/ItemComponent";
-import InstagramComponent from "../component/features/ItemBox/InstagramComponent";
+import ItemComponent from "../component/features/itemBox/ItemComponent";
+import InstagramComponent from "../component/features/itemBox/InstagramComponent";
+import HeaderComponent from "../component/features/header/Header";
 
 // windowにInstgrmのプロパティがないため、持っていることを宣言しエラーを回避している
 interface InstagramWindow extends Window {
@@ -69,8 +70,11 @@ const ItemPage = () => {
 
   const itemDataOnItemPage = (
     <>
-      <div>{itemData}</div>
-      <div>{instagramData()}</div>
+      <HeaderComponent />
+      <div>
+        <div>{itemData}</div>
+        <div>{instagramData()}</div>
+      </div>
     </>
   );
 

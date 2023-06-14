@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export const CLIENT_DOMAIN: string | undefined = import.meta.env
   .VITE_CLIENT_DOMAIN;
 

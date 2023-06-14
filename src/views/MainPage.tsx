@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import type { JSONType } from "../types/json";
 import { getDataFromServer } from "../component/atoms/GetDataFromServer";
-import ItemComponent from "../component/features/ItemsBox/ItemsConponent";
+import ItemComponent from "../component/features/itemsBox/ItemsConponent";
 import LoadingComponent from "../component/features/LoadingComponent";
+import HeaderComponent from "../component/features/header/Header";
 
 const MainPage = () => {
   const [items, setItems] = useState<JSONType | undefined>();
@@ -24,11 +25,14 @@ const MainPage = () => {
   };
 
   const contents = (
-    <div className="w-full">
-      <div className="flex">
-        {loading ? allItemsData() : <LoadingComponent />}
+    <>
+      <HeaderComponent />
+      <div className="w-full">
+        <div className="flex">
+          {loading ? allItemsData() : <LoadingComponent />}
+        </div>
       </div>
-    </div>
+    </>
   );
   return contents;
 };
