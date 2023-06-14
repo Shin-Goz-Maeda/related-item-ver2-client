@@ -39,11 +39,7 @@ const HeaderComponent = () => {
         </Link>
       </div>
       <div>
-        <Button>
-          <Link to="login" onClick={handleLogout}>
-            ログアウト
-          </Link>
-        </Button>
+        <Button onClick={handleLogout}>ログアウト</Button>
       </div>
     </div>
   );
