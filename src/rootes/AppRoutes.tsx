@@ -8,7 +8,8 @@ import ItemPage from "../views/ItemPage";
 import SignUpPage from "../views/SignUpPage";
 import SignInPage from "../views/SignInPage";
 import SendMailConfirmationPage from "../views/SendMailConfirmationPage";
-import AccountSetUpPage from "../views/accountSetUpPage";
+import AccountSetUpPage from "../views/accountInfo/AccountSetUpPage";
+import AccountInfoPage from "../views/accountInfo/AccountInfoPage";
 
 const AppRoutes = () => {
   const contents = (
@@ -42,6 +43,14 @@ const AppRoutes = () => {
             element={
               <PrivateRoute>
                 <AccountSetUpPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="accountInfoPage"
+            element={
+              <PrivateRoute>
+                <AccountInfoPage />
               </PrivateRoute>
             }
           />

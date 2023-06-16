@@ -2,7 +2,7 @@
 export const MenuData = [
   {
     title: "アカウント情報",
-    link: "/accountinfoPage",
+    link: "/accountInfoPage",
   },
   {
     title: "パスワードリセット",

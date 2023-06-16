@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { AccountData, PostAccountData } from "../types/postAccountData";
-import { TODAY } from "../constants";
-import { postDataToServer } from "../component/atoms/PostDataToServer";
+import { AuthContext } from "../../constants/loginUser";
+import { AccountData } from "../../types/postAccountData";
+import { getAccountDataToServer } from "../../component/atoms/GetDataFromServer";
+import LoadingComponent from "../../component/features/LoadingComponent";
+import HeaderComponent from "../../component/features/header/Header";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../constants/loginUser";
-import LoadingComponent from "../component/features/LoadingComponent";
-import { getAccountDataToServer } from "../component/atoms/GetDataFromServer";
-import HeaderComponent from "../component/features/header/Header";
 
-const AccountSetUpPage = () => {
-  const { user } = useContext(AuthContext);
-  const [accountData, setAccountData] = useState<AccountData | undefined>();
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm();
+const AccountInfoPage = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [accountData, setAccountData] = useState<AccountData | undefined>();
 
   const userId: string | undefined = user?.uid;
   const userName = accountData?.success[0].user_name;
@@ -35,40 +31,6 @@ const AccountSetUpPage = () => {
     }
   }, []);
 
-  const onSubmit = (data: any) => {
-    const birthDay = data.birthDay;
-    const birthDayMonth1 = birthDay.charAt(4);
-    const birthDayMonth2 = birthDay.charAt(5);
-    const birthDayDate1 = birthDay.charAt(6);
-    const birthDayDate2 = birthDay.charAt(7);
-    const birthDayMonth = "" + birthDayMonth1 + birthDayMonth2;
-    const birthDayDate = "" + birthDayDate1 + birthDayDate2;
-
-    if (
-      TODAY >= birthDay &&
-      "01" <= birthDayMonth &&
-      "12" >= birthDayMonth &&
-      "01" <= birthDayDate &&
-      "31" >= birthDayDate
-    ) {
-      const accountData: PostAccountData = {
-        userName: data.userName,
-        sex: data.sex,
-        birthDay,
-        category: JSON.stringify(data.category),
-      };
-      const postData = {
-        userId,
-        accountData,
-      };
-
-      postDataToServer("/account-info-setUp", postData, setError);
-      navigate("/");
-    } else {
-      setError("誕生日が正しく入力されていません。");
-    }
-  };
-
   const recommendItemsCategory = (itemCategory: string) => {
     if (recommendItems) {
       const itemLength = recommendItems.length;
@@ -81,12 +43,16 @@ const AccountSetUpPage = () => {
     }
   };
 
+  const onSubmit = () => {
+    navigate("/accountSetUpPage");
+  };
+
   const accountSetUpForm = (
     <>
       <HeaderComponent />
       <div>
         <h1>アカウント登録</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div>
             <label htmlFor="userName">ユーザー名</label>
             <input
@@ -94,8 +60,7 @@ const AccountSetUpPage = () => {
               type="text"
               placeholder="userName123"
               defaultValue={userName ? userName : ""}
-              required
-              {...register("userName")}
+              disabled
             />
           </div>
           <div>
@@ -106,8 +71,7 @@ const AccountSetUpPage = () => {
               type="radio"
               value="male"
               defaultChecked={sex === "male"}
-              required
-              {...register("sex")}
+              disabled
             />
             <label>女</label>
             <input
@@ -115,8 +79,7 @@ const AccountSetUpPage = () => {
               type="radio"
               value="female"
               defaultChecked={sex === "female"}
-              required
-              {...register("sex")}
+              disabled
             />
             <label>その他</label>
             <input
@@ -124,8 +87,7 @@ const AccountSetUpPage = () => {
               type="radio"
               value="other"
               defaultChecked={sex === "other"}
-              required
-              {...register("sex")}
+              disabled
             />
           </div>
           <div>
@@ -140,8 +102,7 @@ const AccountSetUpPage = () => {
               type="date-local"
               placeholder="20201010"
               defaultValue={birthDay ? birthDay : ""}
-              required
-              {...register("birthDay")}
+              disabled
             />
           </div>
           <div>
@@ -157,7 +118,7 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("food-drink") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -169,7 +130,7 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("fashion") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -183,7 +144,7 @@ const AccountSetUpPage = () => {
                     ? recommendItemsCategory("dailyNecessities")
                     : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -195,7 +156,7 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("cosmetics") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -207,7 +168,7 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("baby-kids") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -219,7 +180,7 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("electronics") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
             <div>
@@ -231,11 +192,11 @@ const AccountSetUpPage = () => {
                 defaultChecked={
                   recommendItems ? recommendItemsCategory("sports") : false
                 }
-                {...register("category")}
+                disabled
               />
             </div>
           </div>
-          <button type="submit">登録</button>
+          <button type="submit">編集</button>
         </form>
       </div>
     </>
@@ -246,4 +207,4 @@ const AccountSetUpPage = () => {
   return contents;
 };
 
-export default AccountSetUpPage;
+export default AccountInfoPage;
