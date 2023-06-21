@@ -10,6 +10,8 @@ import SignInPage from "../views/SignInPage";
 import SendMailConfirmationPage from "../views/SendMailConfirmationPage";
 import AccountSetUpPage from "../views/accountInfo/AccountSetUpPage";
 import AccountInfoPage from "../views/accountInfo/AccountInfoPage";
+import PWResetBeforeSignInPage from "../views/PasswordReset/PWResetBeforeSignInPage";
+import PWResetAfterSignInPage from "../views/PasswordReset/PWResetAfterSignInPage";
 
 const AppRoutes = () => {
   const contents = (
@@ -51,6 +53,18 @@ const AppRoutes = () => {
             element={
               <PrivateRoute>
                 <AccountInfoPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="pwResetBeforeSignInPage"
+            element={<PWResetBeforeSignInPage />}
+          />
+          <Route
+            path="pwResetAfterSignInPage"
+            element={
+              <PrivateRoute>
+                <PWResetAfterSignInPage />
               </PrivateRoute>
             }
           />

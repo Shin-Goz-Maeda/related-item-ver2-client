@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { postDataToServer } from "../component/atoms/PostDataToServer";
 import { UserData } from "../types/userData";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NewUserData } from "../types/newUserData";
 
 const SignInPage = () => {
@@ -117,6 +117,9 @@ const SignInPage = () => {
         <button>ログイン</button>
       </form>
       <button onClick={handleGoogleSignIn}>Google認証</button>
+      <div>
+        <Link to="/pwResetBeforeSignInPage">パスワードを忘れた方はこちら</Link>
+      </div>
     </div>
   );
   return contents;

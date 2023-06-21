@@ -6,7 +6,7 @@ export const MenuData = [
   },
   {
     title: "パスワードリセット",
-    link: "/pwResetPage",
+    link: "/pwResetAfterSignInPage",
   },
   {
     title: "退会",
