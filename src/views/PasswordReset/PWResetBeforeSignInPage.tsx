@@ -14,11 +14,10 @@ const PWResetBeforeSignInPage = () => {
 
   // TODO: anyを解消する
   const onSubmit = async (data: any) => {
-    console.log(data.email);
     const email: string | undefined = data.email;
     if (email !== undefined) {
       checkAccountRegisterDataToServer(
-        "/password-reset",
+        "//password-reset-before-signIn",
         email,
         setError,
         setAccountData
