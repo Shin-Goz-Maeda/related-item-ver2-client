@@ -2,6 +2,7 @@ import React from "react";
 import { MenuData } from "./MenuData";
 import { Link } from "react-router-dom";
 
+// TODO:　Googleログインを使用しているユーザーはパスワードリセットページを表示させないようにする。
 const HeaderMenu = () => {
   const Menu = MenuData.map((value, key) => {
     return (
