@@ -1,6 +1,7 @@
 import { SERVER_DOMAIN } from "../../constants/index";
 import type { JSONType } from "../../types/json";
 import { AccountData } from "../../types/postAccountData";
+import { MailAndProvider } from "../../types/pwResetBefore";
 
 export const getDataFromServer = (
   path: string,
@@ -55,6 +56,43 @@ export const getAccountDataToServer = (
 
       if (data.error) {
         setLoadingFunc(true);
+        setErrorFunc(data.error);
+        return;
+      }
+    })
+  );
+};
+
+const accountRegisterData = (data: string) => {
+  // POST情報を設定
+  const postParameter = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      data,
+    }),
+  };
+  return postParameter;
+};
+
+export const checkAccountRegisterDataToServer = (
+  path: string,
+  data: string,
+  setErrorFunc: React.Dispatch<React.SetStateAction<string>>,
+  setSuccessFunc: React.Dispatch<
+    React.SetStateAction<MailAndProvider | undefined>
+  >
+) => {
+  fetch(SERVER_DOMAIN + path, accountRegisterData(data)).then((res) =>
+    res.json().then((data) => {
+      if (data.success && setSuccessFunc) {
+        setSuccessFunc(data);
+        return;
+      }
+
+      if (data.error) {
         setErrorFunc(data.error);
         return;
       }
