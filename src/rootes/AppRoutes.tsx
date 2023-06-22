@@ -5,13 +5,15 @@ import PrivateRoute from "./PrivateRoute";
 
 import MainPage from "../views/MainPage";
 import ItemPage from "../views/ItemPage";
-import SignUpPage from "../views/SignUpPage";
+import SignUpPage from "../views/signUp/SignUpPage";
 import SignInPage from "../views/SignInPage";
-import SendMailConfirmationPage from "../views/SendMailConfirmationPage";
+import SendMailConfirmationPage from "../views/signUp/SendMailConfirmationPage";
 import AccountSetUpPage from "../views/accountInfo/AccountSetUpPage";
 import AccountInfoPage from "../views/accountInfo/AccountInfoPage";
-import PWResetBeforeSignInPage from "../views/PasswordReset/PWResetBeforeSignInPage";
-import PWResetAfterSignInPage from "../views/PasswordReset/PWResetAfterSignInPage";
+import PWResetBeforeSignInPage from "../views/passwordReset/PWResetBeforeSignInPage";
+import PWResetAfterSignInPage from "../views/passwordReset/PWResetAfterSignInPage";
+import WithdrawalPage from "../views/withdrawal/WithdrawalPage";
+import WithdrawalCompletedPage from "../views/withdrawal/WithdrawalCompletedPage";
 
 const AppRoutes = () => {
   const contents = (
@@ -67,6 +69,18 @@ const AppRoutes = () => {
                 <PWResetAfterSignInPage />
               </PrivateRoute>
             }
+          />
+          <Route
+            path="withDrawalPage"
+            element={
+              <PrivateRoute>
+                <WithdrawalPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="withDrawalCompletedPage"
+            element={<WithdrawalCompletedPage />}
           />
         </Routes>
       </BrowserRouter>
