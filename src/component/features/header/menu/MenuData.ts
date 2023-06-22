@@ -10,6 +10,6 @@ export const MenuData = [
   },
   {
     title: "退会",
-    link: "/withdrawalConfirmationPage",
+    link: "withDrawalPage",
   },
 ];
