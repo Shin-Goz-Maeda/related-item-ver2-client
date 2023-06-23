@@ -12,7 +12,6 @@ const PWResetAfterSignInPage = () => {
   const [success, setSuccess] = useState<string>("");
   const [accountData, setAccountData] = useState<MailAndProvider | undefined>();
   const userId = user?.uid;
-  console.log(accountData);
 
   useEffect(() => {
     if (userId) {
