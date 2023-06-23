@@ -99,3 +99,32 @@ export const checkAccountRegisterDataToServer = (
     })
   );
 };
+
+const withDrawalAccountData = (data: string | undefined) => {
+  // POST情報を設定
+  const postParameter = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      data,
+    }),
+  };
+  return postParameter;
+};
+
+export const withDrawalAccountDataToServer = (
+  path: string,
+  data: string | undefined,
+  setErrorFunc: React.Dispatch<React.SetStateAction<string>>
+) => {
+  fetch(SERVER_DOMAIN + path, withDrawalAccountData(data)).then((res) =>
+    res.json().then((data) => {
+      if (data.error) {
+        setErrorFunc(data.error);
+        return;
+      }
+    })
+  );
+};
